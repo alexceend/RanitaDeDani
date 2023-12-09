@@ -8,10 +8,10 @@ import java.awt.*;
 
 public class GameState {
 
-    private Player player;
+    private final Player player;
 
     public GameState(){
-        player = new Player(new Vector2D(400,400), new Vector2D(), Assets.player);
+        player = new Player(new Point(400, 400), Assets.player);
     }
 
     public void update(){

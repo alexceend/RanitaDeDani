@@ -10,13 +10,13 @@ import java.awt.image.BufferStrategy;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame implements Runnable {
+    public static Window instance;
     public static final int WIDTH = 800, HEIGHT = 800;
     private Canvas canvas;
     private Thread thread;
     private boolean running = false;
 
     private BufferStrategy bs;
-    private Graphics g;
 
     private final int FPS = 144;
     private double TARGETTIME = 1000000000 / FPS;
@@ -47,7 +47,8 @@ public class Window extends JFrame implements Runnable {
     }
 
     public static void main(String[] args) {
-        new Window().start();
+        instance = new Window();
+        instance.start();
     }
 
     private void update() {
@@ -63,16 +64,18 @@ public class Window extends JFrame implements Runnable {
             return;
         }
 
-        g = bs.getDrawGraphics();
+        Graphics g = bs.getDrawGraphics();
         //-------------Dibujar---------
         g.fillRect(0, 0, WIDTH, HEIGHT); //Limpiar pantalla a cada frame
-
         gameState.draw(g);
 
         //g.drawImage(Assets.player, WIDTH / 2, HEIGHT / 2, null);
         g.setColor(Color.black);
         g.drawString("" + AVERAGEFPS, 10, 20);
 
+        g.setColor(Color.ORANGE);
+        g.drawLine(-100, 0, 100, 0);
+        g.drawLine(0, -100, 0, 100);
         //-----------------------------
         g.dispose();
         bs.show();
@@ -86,7 +89,7 @@ public class Window extends JFrame implements Runnable {
     @Override
     public void run() {
 
-        long now = 0;
+        long now;
         long lastTime = System.nanoTime();
         int frames = 0;
         long time = 0;
@@ -131,5 +134,9 @@ public class Window extends JFrame implements Runnable {
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 }

@@ -8,7 +8,6 @@ public class Mouse implements MouseListener {
 
     public static boolean CLICK;
     public static boolean CLICKED;
-    protected static double x, y;
 
     public Mouse() {
         CLICK = false;

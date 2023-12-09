@@ -1,16 +1,14 @@
 package gameObjects;
 
-import math.Vector2D;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class GameObject {
     protected BufferedImage texture;
-    protected Vector2D position;
+    protected Point center;
 
-    public GameObject(Vector2D position, BufferedImage texture){
-        this.position = position;
+    public GameObject(Point center, BufferedImage texture){
+        this.center = center;
         this.texture = texture;
     }
 
@@ -18,11 +16,11 @@ public abstract class GameObject {
 
     public abstract void draw(Graphics g);
 
-    public Vector2D getPosition() {
-        return position;
+    public Point getCenter() {
+        return center;
     }
 
-    public void setPosition(Vector2D position) {
-        this.position = position;
+    public void setCenter(Point center) {
+        this.center = center;
     }
 }
