@@ -8,15 +8,13 @@ public class Mouse implements MouseListener {
 
     public static boolean CLICK;
     public static boolean CLICKED;
-    public static double x, y;
+    protected static double x, y;
 
     public Mouse() {
         CLICK = false;
     }
 
     public void update() {
-        x = getPosX();
-        y = getPosY();
         CLICK = CLICKED;
     }
 
@@ -24,6 +22,8 @@ public class Mouse implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         CLICKED = true;
+        //x = e.getX();
+        //y = e.getY();
     }
 
     @Override
@@ -38,7 +38,6 @@ public class Mouse implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
@@ -46,11 +45,15 @@ public class Mouse implements MouseListener {
         CLICKED = false;
     }
 
-    public double getPosX(){
+    public static double getPosX() {
+        //return e.getX();
+        //return x;
         return MouseInfo.getPointerInfo().getLocation().x;
     }
 
-    public double getPosY(){
+    public static double getPosY() {
+        //return e.getY();
+        //return y;
         return MouseInfo.getPointerInfo().getLocation().y;
     }
 }
