@@ -30,23 +30,30 @@ public abstract class MovingObject extends GameObject {
             double distance = Math.sqrt(Math.pow(mo.getCenter().getX() - this.getCenter().getX(), 2) +
                     Math.pow(mo.getCenter().getY() - this.getCenter().getY(), 2));
 
-            if(distance < mo.width/2 + mo.height/2 && movingObjects.contains(this)){
-                objectCollision(m,this);
+            if (distance < mo.width / 2 + mo.height / 2 && movingObjects.contains(this)) {
+                objectCollision(m, this);
             }
         }
     }
 
-    private void objectCollision(MovingObject a, MovingObject b){
-        if(!(a instanceof Fly && b instanceof Fly)){
+    private void objectCollision(MovingObject a, MovingObject b) {
+        if (!((a instanceof Fly || a instanceof Wasp) && (b instanceof Fly || b instanceof Wasp))) {
+            gameState.playAnimation(getCenter());
             a.Destroy();
             b.Destroy();
-        }/* else if (!((a instanceof Player || a instanceof Fly) && (a instanceof Player || a instanceof Fly))) {
+        }
+        if(a instanceof Player && b instanceof Wasp){
+            gameState.playAnimation(getCenter());
+            a.Destroy();
+            b.Destroy();
+        }
+        /* else if (!((a instanceof Player || a instanceof Fly) && (a instanceof Player || a instanceof Fly))) {
             a.Destroy();
             b.Destroy();
         }*/
     }
 
-    protected void Destroy(){
+    protected void Destroy() {
         gameState.getMovingObjects().remove(this);
     }
 

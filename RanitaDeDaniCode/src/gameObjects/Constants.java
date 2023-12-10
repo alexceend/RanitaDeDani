@@ -20,4 +20,7 @@ public class Constants {
     //FLY PROPS
     public static final double FLY_VEL = 2.0;
 
+    //WASP PROPS
+    public static final double WASP_VEL = 3.0;
+
 }
