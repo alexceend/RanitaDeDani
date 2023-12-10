@@ -6,23 +6,20 @@ import java.awt.event.MouseListener;
 
 public class Mouse implements MouseListener {
 
-    public static boolean CLICK;
-    public static boolean CLICKED;
+    public static boolean SHOOT, CLICKED;
 
     public Mouse() {
-        CLICK = false;
+        SHOOT = false;
     }
 
     public void update() {
-        CLICK = CLICKED;
+        SHOOT = CLICKED;
     }
 
 
     @Override
     public void mouseClicked(MouseEvent e) {
         CLICKED = true;
-        //x = e.getX();
-        //y = e.getY();
     }
 
     @Override

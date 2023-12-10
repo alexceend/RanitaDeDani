@@ -3,7 +3,7 @@ package math;
 import java.awt.*;
 
 public class Vector2D {
-    private final double x, y;
+    private double x, y;
 
     public Vector2D() {
         this(0, 0);
@@ -54,5 +54,11 @@ public class Vector2D {
                 "x=" + x +
                 ", y=" + y +
                 '}';
+    }
+
+    public Vector2D add(int velocity) {
+        this.x += velocity;
+        this.y += velocity;
+        return new Vector2D(x, y);
     }
 }
