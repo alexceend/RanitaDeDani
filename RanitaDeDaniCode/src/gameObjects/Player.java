@@ -45,7 +45,7 @@ public class Player extends MovingObject {
 
         AffineTransform at = new AffineTransform();
         at.translate(center.getX() - (double) texture.getWidth() / 2, center.getY() - (double) texture.getHeight() / 2);
-        at.rotate(direction.getWeirdAngle(mousePoint),
+        at.rotate(direction.getActualAngle(mousePoint),
                 (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
 
         g.setColor(Color.white);

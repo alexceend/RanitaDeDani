@@ -23,7 +23,7 @@ public class Tongue extends MovingObject {
 
         AffineTransform at = new AffineTransform();
         at.translate(center.getX() - (double) texture.getWidth() / 2, center.getY() - (double) texture.getHeight() / 2);
-        double angle = direction.getWeirdAngle(Mouse.getPos());
+        double angle = direction.getActualAngle(Mouse.getPos());
         at.rotate(angle, (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
         g2d.drawImage(texture, at, null);
     }

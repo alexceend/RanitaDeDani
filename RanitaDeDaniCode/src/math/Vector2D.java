@@ -3,6 +3,7 @@ package math;
 import java.awt.*;
 
 public class Vector2D {
+    private static double RAD_90 = Math.PI/2;
     private double x, y;
 
     public Vector2D(double x, double y) {
@@ -25,10 +26,8 @@ public class Vector2D {
     public double getAngle(){
         return Math.acos(getX() / getMagnitude());
     }
-    public double getWeirdAngle(Point mousePoint) {
-        return mousePoint.getY() > 400 ?
-                getAngle() + (Math.PI/2) :
-                -1 * (getAngle() + (1.5*Math.PI));
+    public double getActualAngle(Point mousePoint) {
+        return ((mousePoint.getY() > 400 ? 1 : -1) * getAngle()) + RAD_90;
     }
 
     public Vector2D multiply(double number) {

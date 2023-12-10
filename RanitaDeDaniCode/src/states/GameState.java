@@ -14,7 +14,7 @@ public class GameState {
     private final Player player
             = new Player(new Point(400, 400), Assets.player, this);
     private final HashSet<MovingObject> movingObjects = new HashSet<>();
-    
+
     public void update(){
         player.update();
         for(MovingObject mo: new HashSet<>(movingObjects)) {
