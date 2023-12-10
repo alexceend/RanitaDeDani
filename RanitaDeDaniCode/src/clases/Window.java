@@ -8,23 +8,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-@SuppressWarnings("serial")
 public class Window extends JFrame implements Runnable {
     public static Window instance;
     public static final int WIDTH = 800, HEIGHT = 800;
-    private Canvas canvas;
+    private final Canvas canvas = new Canvas();
     private Thread thread;
     private boolean running = false;
 
-    private BufferStrategy bs;
-
     private final int FPS = 144;
-    private double TARGETTIME = 1000000000 / FPS;
     private double delta = 0;
     private int AVERAGEFPS = FPS;
 
     private GameState gameState;
-    private Mouse mouse;
 
     public Window() {
         setTitle("Ranita Loca");
@@ -34,16 +29,14 @@ public class Window extends JFrame implements Runnable {
         setLocationRelativeTo(null); //Se despliega en el centro
         setVisible(true);
 
-        canvas = new Canvas();
-        mouse = new Mouse();
-
-        canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        final Dimension d = new Dimension(WIDTH, HEIGHT);
+        canvas.setPreferredSize(d);
+        canvas.setMaximumSize(d);
+        canvas.setMinimumSize(d);
         canvas.setFocusable(true); //Reciben enrtadas por parte del teclado
 
-        add(canvas);
-        canvas.addMouseListener(mouse);
+        super.add(canvas);
+        canvas.addMouseListener(new Mouse());
     }
 
     public static void main(String[] args) {
@@ -52,12 +45,11 @@ public class Window extends JFrame implements Runnable {
     }
 
     private void update() {
-        mouse.update();
         gameState.update();
     }
 
     private void draw() {
-        bs = canvas.getBufferStrategy();
+        BufferStrategy bs = canvas.getBufferStrategy();
 
         if (bs == null) {
             canvas.createBufferStrategy(3);
@@ -88,7 +80,6 @@ public class Window extends JFrame implements Runnable {
 
     @Override
     public void run() {
-
         long now;
         long lastTime = System.nanoTime();
         int frames = 0;
@@ -98,7 +89,7 @@ public class Window extends JFrame implements Runnable {
 
         while (running) {
             now = System.nanoTime();
-            delta += (now - lastTime) / TARGETTIME;
+            delta += (now - lastTime) / ((double) 1000000000 / FPS);
             time += (now - lastTime);
             lastTime = now;
 

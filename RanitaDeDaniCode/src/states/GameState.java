@@ -3,34 +3,29 @@ package states;
 import gameObjects.MovingObject;
 import gameObjects.Player;
 import graphics.Assets;
-import math.Vector2D;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GameState {
 
-    private final Player player;
-    private ArrayList<MovingObject> movingObjects = new ArrayList<MovingObject>();
+    private final HashSet<MovingObject> movingObjects = new HashSet<>();
 
     public GameState(){
-        player = new Player(new Point(400, 400), Assets.player, this);
-        movingObjects.add(player);
+        movingObjects.add(
+                new Player(new Point(400, 400), Assets.player, this));
     }
 
     public void update(){
-        for(int i = 0; i < movingObjects.size(); i++){
-            movingObjects.get(i).update();
-        }
+        for(MovingObject mo: new HashSet<>(movingObjects)) mo.update();
     }
 
     public void draw(Graphics g){
-        for(int i = 0; i < movingObjects.size(); i++){
-            movingObjects.get(i).draw(g);
-        }
+        for(MovingObject mo: new HashSet<>(movingObjects)) mo.draw(g);
     }
 
-    public ArrayList<MovingObject> getMovingObjects() {
+    public HashSet<MovingObject> getMovingObjects() {
         return movingObjects;
     }
 }

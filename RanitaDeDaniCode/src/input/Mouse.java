@@ -6,30 +6,23 @@ import java.awt.event.MouseListener;
 
 public class Mouse implements MouseListener {
 
-    public static boolean SHOOT, CLICKED;
+    public static boolean CLICKING;
 
     public Mouse() {
-        SHOOT = false;
+        CLICKING = false;
     }
-
-    public void update() {
-        SHOOT = CLICKED;
-    }
-
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        CLICKED = true;
-    }
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        CLICKING = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        CLICKED = false;
+        CLICKING = false;
     }
 
     @Override
@@ -38,18 +31,13 @@ public class Mouse implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
-        CLICKED = false;
+        CLICKING = false;
     }
 
-    public static double getPosX() {
+    public static Point getPos() {
         //return e.getX();
         //return x;
-        return MouseInfo.getPointerInfo().getLocation().x;
+        return MouseInfo.getPointerInfo().getLocation().getLocation();
     }
 
-    public static double getPosY() {
-        //return e.getY();
-        //return y;
-        return MouseInfo.getPointerInfo().getLocation().y;
-    }
 }
