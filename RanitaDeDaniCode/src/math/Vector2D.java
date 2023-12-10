@@ -40,6 +40,10 @@ public class Vector2D {
         return new Vector2D(x/mag, y/mag);
     }
 
+    public Vector2D substract(Vector2D v){
+        return new Vector2D(x - v.getX(), y -v.getY());
+    }
+
     public static Vector2D fromLocations(Point p1, Point p2) {
         Point out = p2.getLocation();
         out.translate(-1 * p1.x, -1 * p1.y); // A(x, y); B(x', y') ; AB(x' - x, y' - y)

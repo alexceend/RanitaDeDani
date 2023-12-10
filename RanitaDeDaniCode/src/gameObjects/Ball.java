@@ -2,14 +2,15 @@ package gameObjects;
 
 import input.Mouse;
 import math.Vector2D;
+import states.GameState;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Ball extends MovingObject {
-    public Ball(Point position, Vector2D unitaryDirection, BufferedImage texture) {
-            super(position, unitaryDirection.multiply(10), texture);
+    public Ball(Point position, Vector2D unitaryDirection, BufferedImage texture, GameState gameState) {
+            super(position, unitaryDirection.multiply(10), texture, gameState);
     }
 
     @Override

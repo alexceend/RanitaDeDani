@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 
 public class Fly extends MovingObject{
     private double angle;
-    public Fly(Point center, Vector2D UnitaryDirection, BufferedImage texture) {
-        super(center, UnitaryDirection.multiply(Constants.FLY_VEL), texture);
+    public Fly(Point center, Vector2D UnitaryDirection, BufferedImage texture, GameState gameState) {
+        super(center, UnitaryDirection.multiply(Constants.FLY_VEL), texture, gameState);
         angle = direction.getActualAngle(center);
     }
 
@@ -20,6 +20,8 @@ public class Fly extends MovingObject{
         this.center.translate((int) direction.getX(), (int) direction.getY());
         //Checkear que esté fuera;
         angle += Constants.DELTAANGLE;
+
+        collidesWith();
     }
 
     @Override

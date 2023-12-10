@@ -15,10 +15,8 @@ public class Player extends MovingObject {
 
     private final Canvas canvas = Window.instance.getCanvas();
     private long lastTime = System.currentTimeMillis();
-    private final GameState gameState;
     public Player(Point center, BufferedImage texture, GameState gameState) {
-        super(center, new Vector2D(0, 1), texture);
-        this.gameState = gameState;
+        super(center, new Vector2D(0, 1), texture, gameState);
     }
 
     @Override
@@ -33,9 +31,11 @@ public class Player extends MovingObject {
         //System.out.println("ANGLE: "+angle);
 
         if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > 100) {
-            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball, this.gameState));
             lastTime = System.currentTimeMillis();
         }
+
+        collidesWith();
     }
 
     @Override

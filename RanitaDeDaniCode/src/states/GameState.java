@@ -48,7 +48,8 @@ public class GameState {
             movingObjects.add(new Fly(
                     new Point((int) x, (int) y),
                     new Vector2D(player.getCenter().getX() - x, player.getCenter().getY() - y).toUnitary(),
-                    Assets.fly
+                    Assets.fly,
+                    this
             ));
         }
         flys++;
