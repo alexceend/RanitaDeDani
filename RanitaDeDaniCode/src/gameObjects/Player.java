@@ -33,7 +33,7 @@ public class Player extends MovingObject {
         //System.out.println("ANGLE: "+angle);
 
         if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > 100) {
-            gameState.getMovingObjects().add(new Tongue(this.center.getLocation(), this.direction.toUnitary(), Assets.tongue));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball));
             lastTime = System.currentTimeMillis();
         }
     }
