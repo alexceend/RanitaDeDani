@@ -22,12 +22,12 @@ public class Window extends JFrame implements Runnable {
     private GameState gameState;
 
     public Window() {
-        setTitle("Ranita Loca");
-        setSize(WIDTH, HEIGHT);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
-        setLocationRelativeTo(null); //Se despliega en el centro
-        setVisible(true);
+        super.setTitle("Ranita Loca");
+        super.setSize(WIDTH, HEIGHT);
+        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super.setResizable(false);
+        super.setLocationRelativeTo(null); //Se despliega en el centro
+        super.setVisible(true);
 
         final Dimension d = new Dimension(WIDTH, HEIGHT);
         canvas.setPreferredSize(d);
@@ -35,8 +35,8 @@ public class Window extends JFrame implements Runnable {
         canvas.setMinimumSize(d);
         canvas.setFocusable(true); //Reciben enrtadas por parte del teclado
 
-        super.add(canvas);
         canvas.addMouseListener(new Mouse());
+        super.add(canvas);
     }
 
     public static void main(String[] args) {
