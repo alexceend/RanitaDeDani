@@ -65,9 +65,9 @@ public class Window extends JFrame implements Runnable {
         g.setColor(Color.black);
         g.drawString("" + AVERAGEFPS, 10, 20);
 
-        g.setColor(Color.ORANGE);
+        /*g.setColor(Color.ORANGE);
         g.drawLine(-100, 0, 100, 0);
-        g.drawLine(0, -100, 0, 100);
+        g.drawLine(0, -100, 0, 100);*/
         //-----------------------------
         g.dispose();
         bs.show();
