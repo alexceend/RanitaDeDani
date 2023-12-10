@@ -3,7 +3,7 @@ package math;
 import java.awt.*;
 
 public class Vector2D {
-    private static double RAD_90 = Math.PI/2;
+    private static final double RAD_90 = Math.PI/2;
     private double x, y;
 
     public Vector2D(double x, double y) {
