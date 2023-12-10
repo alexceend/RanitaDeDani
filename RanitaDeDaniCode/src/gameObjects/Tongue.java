@@ -26,6 +26,5 @@ public class Tongue extends MovingObject {
         double angle = direction.getWeirdAngle(Mouse.getPos());
         at.rotate(angle, (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
         g2d.drawImage(texture, at, null);
-
     }
 }

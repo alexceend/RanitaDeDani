@@ -14,12 +14,11 @@ import java.awt.image.BufferedImage;
 public class Player extends MovingObject {
 
     private final Canvas canvas = Window.instance.getCanvas();
-    private long lastTime;
+    private long lastTime = System.currentTimeMillis();
     private final GameState gameState;
     public Player(Point center, BufferedImage texture, GameState gameState) {
         super(center, new Vector2D(0, 1), texture);
         this.gameState = gameState;
-        lastTime = System.currentTimeMillis();
     }
 
     @Override
