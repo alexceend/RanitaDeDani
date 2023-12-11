@@ -10,11 +10,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.HashSet;
 
 public class Player extends MovingObject {
 
     private final Canvas canvas = Window.instance.getCanvas();
     private long lastTime = System.currentTimeMillis();
+    public static int numBullets = 5;
+    public static int numVidas = 3;
+    private long lastRecharge = System.currentTimeMillis();
+
     public Player(Point center, BufferedImage texture, GameState gameState) {
         super(center, new Vector2D(0, 1), texture, gameState);
     }
@@ -31,11 +36,18 @@ public class Player extends MovingObject {
         //System.out.println("ANGLE: "+angle);
 
         if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > 100) {
-            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball, this.gameState));
-            lastTime = System.currentTimeMillis();
+            if (numBullets > 0) {
+                gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball, this.gameState));
+                lastTime = System.currentTimeMillis();
+                numBullets--;
+            }
         }
 
-        collidesWith();
+        if((System.currentTimeMillis() - lastRecharge) > 3000){
+            lastRecharge = System.currentTimeMillis();
+            numBullets++;
+        }
+
     }
 
     @Override
@@ -49,8 +61,11 @@ public class Player extends MovingObject {
                 (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
 
         g.setColor(Color.white);
+        g.drawString(String.valueOf(numBullets), 10, 10);
+        g.setColor(Color.white);
+        g.drawString(String.valueOf(numVidas), 30, 10);
         //g.drawLine((int) position.getX(), (int) position.getY(), (int) Mouse.getPosX(), (int) Mouse.getPosY());
-        ((Graphics2D) g).drawImage(texture, at, null);
+        if(gameState.getMovingObjects().contains(this)) ((Graphics2D) g).drawImage(texture, at, null);
         //g2d.drawImage(texture, (int) position.getX(), (int) position.getY(), null);
 
     }

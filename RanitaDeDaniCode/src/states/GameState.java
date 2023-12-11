@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class GameState {
     private final Player player;
-    private final HashSet<MovingObject> movingObjects = new HashSet<>();
+    public static final HashSet<MovingObject> movingObjects = new HashSet<>();
     private ArrayList<Animation> animations = new ArrayList<Animation>();
 
     private int flys;
@@ -99,6 +99,7 @@ public class GameState {
 
     public void update() {
         player.update();
+        collidesWith();
         for (MovingObject mo : new HashSet<>(movingObjects)) {
             mo.update();
             if ((mo instanceof Ball || mo instanceof Fly || mo instanceof Wasp) && isPosOutsideComponent(mo.getCenter())) {
@@ -134,4 +135,48 @@ public class GameState {
     public HashSet<MovingObject> getMovingObjects() {
         return movingObjects;
     }
+
+    protected void collidesWith() {
+        HashSet<MovingObject> movingObjects = this.getMovingObjects();
+        for (MovingObject mo : new HashSet<>(movingObjects)) {
+            for (MovingObject mo1 : new HashSet<>(movingObjects)) {
+                if (mo.equals(mo1)) continue;
+
+                double distance = Math.sqrt(Math.pow(mo.getCenter().getX() - mo1.getCenter().getX(), 2) +
+                        Math.pow(mo.getCenter().getY() - mo1.getCenter().getY(), 2));
+
+                if (distance < (double) mo.width / 2 + (double) mo.height / 2) {
+                    objectCollision(mo, mo1);
+                }
+            }
+        }
+    }
+
+    private void objectCollision(MovingObject a, MovingObject b) {
+        if((a instanceof Ball && (b instanceof Fly || b instanceof Wasp))
+                || (b instanceof Ball && (a instanceof Fly || a instanceof Wasp))){
+            this.playAnimation(a.getCenter());
+            a.remove();
+            b.remove();
+        } else if ((a instanceof Player && b instanceof Wasp) || (b instanceof Player && a instanceof Wasp)) {
+            //TODO Quitar la vida
+            Player.numVidas--;
+            if((Player.numVidas > 0)){
+                if (a instanceof Player){
+                    this.playAnimation(b.getCenter()); //TODO Cambiar animación a golpe
+                    b.remove();
+                }else{
+                    a.remove();
+                    this.playAnimation(a.getCenter()); //TODO Cambiar animación a golpe
+                }
+            }else{
+                this.playAnimation(a.getCenter());
+                a.remove();
+                b.remove();
+            }
+        }
+    }
+
+
+
 }

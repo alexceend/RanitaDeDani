@@ -18,10 +18,7 @@ public class Fly extends MovingObject{
     @Override
     public void update() {
         this.center.translate((int) direction.getX(), (int) direction.getY());
-        //Checkear que esté fuera;
         angle += Constants.DELTAANGLE;
-
-        collidesWith();
     }
 
     @Override

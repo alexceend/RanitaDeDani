@@ -19,8 +19,6 @@ public class Wasp extends MovingObject{
     @Override
     public void update() {
         this.center.translate((int) direction.getX(), (int) direction.getY());
-
-        collidesWith();
     }
 
     @Override

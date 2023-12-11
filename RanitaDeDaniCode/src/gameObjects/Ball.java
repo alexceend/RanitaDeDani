@@ -28,4 +28,10 @@ public class Ball extends MovingObject {
         at.rotate(angle, (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
         g2d.drawImage(texture, at, null);
     }
+
+    @Override
+    public void remove() {
+        super.remove();
+        Player.numBullets+=2;
+    }
 }

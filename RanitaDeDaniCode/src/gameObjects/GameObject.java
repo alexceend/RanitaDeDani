@@ -1,5 +1,7 @@
 package gameObjects;
 
+import states.GameState;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -22,5 +24,9 @@ public abstract class GameObject {
 
     public void setCenter(Point center) {
         this.center = center;
+    }
+
+    public void remove(){
+        GameState.movingObjects.remove(this);
     }
 }
