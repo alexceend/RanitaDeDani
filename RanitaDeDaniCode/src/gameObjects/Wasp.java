@@ -31,4 +31,10 @@ public class Wasp extends MovingObject{
 
         g2d.drawImage(texture, at, null);
     }
+
+    @Override
+    public void remove() {
+        super.remove();
+        gameState.addScore(Constants.WASP_SCORE);
+    }
 }

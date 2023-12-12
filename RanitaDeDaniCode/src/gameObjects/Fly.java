@@ -34,4 +34,10 @@ public class Fly extends MovingObject{
         g2d.drawImage(texture, at, null);
 
     }
+
+    @Override
+    public void remove() {
+        super.remove();
+        gameState.addScore(Constants.FLY_SCORE);
+    }
 }

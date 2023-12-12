@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class Ball extends MovingObject {
     public Ball(Point position, Vector2D unitaryDirection, BufferedImage texture, GameState gameState) {
-            super(position, unitaryDirection.multiply(10), texture, gameState);
+            super(position, unitaryDirection.multiply(Constants.BALL_VEL), texture, gameState);
     }
 
     @Override

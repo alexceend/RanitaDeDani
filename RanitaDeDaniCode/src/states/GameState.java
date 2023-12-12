@@ -6,6 +6,7 @@ import graphics.Assets;
 import math.Vector2D;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -15,6 +16,7 @@ public class GameState {
     public static final HashSet<MovingObject> movingObjects = new HashSet<>();
     private ArrayList<Animation> animations = new ArrayList<Animation>();
 
+    private int score = 0;
     private int flys;
 
     public GameState() {
@@ -24,10 +26,13 @@ public class GameState {
         startWave();
     }
 
+    public void addScore(int value) {
+        score += value;
+    }
 
     private void startWave() {
         int numRand = (int) (Math.random() * flys);
-        for (int numWasps = 0; numWasps < numRand; numWasps++){
+        for (int numWasps = 0; numWasps < numRand; numWasps++) {
             double x = 400, y = 400;
             int lado = new Random().nextInt(0, 3);
             switch (lado) {
@@ -89,9 +94,10 @@ public class GameState {
         flys++;
     }
 
-    public void playAnimation(Point center) {
+    //TODO: USAR EL HASH PARA ELEGIR ANIMACIÓN EN VEZ DE DOS FUNCIONES;
+    public void playAnimation(Point center, BufferedImage[] img) {
         animations.add(new Animation(
-                Assets.exp,
+                img,
                 50,
                 center
         ));
@@ -126,6 +132,46 @@ public class GameState {
             g2d.drawImage(anim.getCurrentFrame(), (int) anim.getCenter().getX(), (int) anim.getCenter().getY(), null);
         }
 
+        drawScore(g);
+        drawLifes(g);
+        drawNumBullets(g);
+    }
+
+    private void drawScore(Graphics g) {
+        Point p = new Point(700, 25);
+        String scoreToString = Integer.toString(score);
+        for (int i = 0; i < scoreToString.length(); i++) {
+            g.drawImage(Assets.numbersImg[Integer.parseInt(scoreToString.substring(i, i + 1))],
+                    (int) p.getX(), (int) p.getY(), null);
+            p.setLocation(p.getX() + 20, p.getY());
+        }
+    }
+
+    private void drawNumBullets(Graphics g) {
+        Point p = new Point(10, 50);
+        String bulletsToString = Integer.toString(Player.numBullets);
+        for (int i = 0; i < bulletsToString.length(); i++) {
+            g.drawImage(Assets.numbersImg[Integer.parseInt(bulletsToString.substring(i, i + 1))],
+                    (int) p.getX(), (int) p.getY(), null);
+            p.setLocation(p.getX() + 20, p.getY());
+        }
+        g.drawImage(Assets.xImg, (int) p.getX()+5, (int) p.getY(), null);
+        g.drawImage(Assets.ball, (int) p.getX()+35 - Assets.ball.getWidth()/2, (int) p.getY() - Assets.ball.getHeight()/4, null);
+    }
+
+    private void drawLifes(Graphics g) {
+        Point p = new Point(10, 25);
+        String lifesToString = Integer.toString(Player.numVidas);
+        g.drawImage(Assets.numbersImg[Integer.parseInt(lifesToString)],
+                (int) p.getX(), (int) p.getY(), null);
+        p.setLocation(p.getX() + 20, p.getY());
+        g.drawImage(Assets.xImg, (int) p.getX(), (int) p.getY(), null);
+        p.setLocation(p.getX() + 20, p.getY());
+        g.drawImage(Assets.lifeIco, (int) p.getX(), (int) p.getY(), null);
+    }
+
+    private void drawBullets(Graphics g) {
+
     }
 
     private boolean isPosOutsideComponent(Point pos) {
@@ -153,30 +199,33 @@ public class GameState {
     }
 
     private void objectCollision(MovingObject a, MovingObject b) {
-        if((a instanceof Ball && (b instanceof Fly || b instanceof Wasp))
-                || (b instanceof Ball && (a instanceof Fly || a instanceof Wasp))){
-            this.playAnimation(a.getCenter());
+        if ((a instanceof Ball && (b instanceof Fly || b instanceof Wasp))
+                || (b instanceof Ball && (a instanceof Fly || a instanceof Wasp))) {
+            this.playAnimation(a.getCenter(), Assets.exp);
             a.remove();
             b.remove();
         } else if ((a instanceof Player && b instanceof Wasp) || (b instanceof Player && a instanceof Wasp)) {
             //TODO Quitar la vida
             Player.numVidas--;
-            if((Player.numVidas > 0)){
-                if (a instanceof Player){
-                    this.playAnimation(b.getCenter()); //TODO Cambiar animación a golpe
+            if ((Player.numVidas > 0)) {
+                if (a instanceof Player) {
+                    this.playAnimation(a.getCenter(), Assets.exp); //TODO Cambiar animación a golpe
                     b.remove();
-                }else{
+                } else {
                     a.remove();
-                    this.playAnimation(a.getCenter()); //TODO Cambiar animación a golpe
+                    this.playAnimation(b.getCenter(), Assets.exp); //TODO Cambiar animación a golpe
                 }
-            }else{
-                this.playAnimation(a.getCenter());
+            } else {
+                if (a instanceof Player) {
+                    this.playAnimation(a.getCenter(), Assets.death);
+                } else {
+                    this.playAnimation(b.getCenter(), Assets.death);
+                }
                 a.remove();
                 b.remove();
             }
         }
     }
-
 
 
 }

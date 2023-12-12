@@ -35,7 +35,7 @@ public class Player extends MovingObject {
 
         //System.out.println("ANGLE: "+angle);
 
-        if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > 100) {
+        if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > Constants.FIRERATE) {
             if (numBullets > 0) {
                 gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball, this.gameState));
                 lastTime = System.currentTimeMillis();
@@ -60,10 +60,6 @@ public class Player extends MovingObject {
         at.rotate(direction.getActualAngle(mousePoint),
                 (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
 
-        g.setColor(Color.white);
-        g.drawString(String.valueOf(numBullets), 10, 10);
-        g.setColor(Color.white);
-        g.drawString(String.valueOf(numVidas), 30, 10);
         //g.drawLine((int) position.getX(), (int) position.getY(), (int) Mouse.getPosX(), (int) Mouse.getPosY());
         if(gameState.getMovingObjects().contains(this)) ((Graphics2D) g).drawImage(texture, at, null);
         //g2d.drawImage(texture, (int) position.getX(), (int) position.getY(), null);

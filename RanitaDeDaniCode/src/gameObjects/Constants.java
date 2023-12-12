@@ -15,12 +15,14 @@ public class Constants {
     public static final double DELTAANGLE = 0.1;
 
     //BALL PROP
-    public static final double BALL_VEL = 15.0;
+    public static final double BALL_VEL = 10.0;
 
     //FLY PROPS
     public static final double FLY_VEL = 2.0;
+    public static final int FLY_SCORE = 1;
 
     //WASP PROPS
     public static final double WASP_VEL = 3.0;
+    public static final int WASP_SCORE = 5;
 
 }
