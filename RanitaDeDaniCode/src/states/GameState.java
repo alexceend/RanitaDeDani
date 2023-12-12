@@ -16,6 +16,8 @@ public class GameState {
     public static final HashSet<MovingObject> movingObjects = new HashSet<>();
     private ArrayList<Animation> animations = new ArrayList<Animation>();
 
+    private Sound explosionSound = new Sound(Assets.explosion);
+
     private int score = 0;
     private int flys;
 
@@ -104,6 +106,8 @@ public class GameState {
     }
 
     public void update() {
+        if(explosionSound.getFramePosition() > 5000) explosionSound.stop();
+
         player.update();
         collidesWith();
         for (MovingObject mo : new HashSet<>(movingObjects)) {
@@ -156,14 +160,14 @@ public class GameState {
                     (int) p.getX(), (int) p.getY(), null);
             p.setLocation(p.getX() + 20, p.getY());
         }
-        g.drawImage(Assets.xImg, (int) p.getX()+5, (int) p.getY(), null);
-        g.drawImage(Assets.ball, (int) p.getX()+35 - Assets.ball.getWidth()/2, (int) p.getY() - Assets.ball.getHeight()/4, null);
+        g.drawImage(Assets.xImg, (int) p.getX() + 5, (int) p.getY(), null);
+        g.drawImage(Assets.ball, (int) p.getX() + 35 - Assets.ball.getWidth() / 2, (int) p.getY() - Assets.ball.getHeight() / 4, null);
     }
 
     private void drawLifes(Graphics g) {
         Point p = new Point(10, 25);
         String lifesToString = Integer.toString(Player.numVidas);
-        if(Player.numVidas < 0) lifesToString = "0"; //Pone vidas a 0 si baja de 0 para evitar errores
+        if (Player.numVidas < 0) lifesToString = "0"; //Pone vidas a 0 si baja de 0 para evitar errores
         g.drawImage(Assets.numbersImg[Integer.parseInt(lifesToString)],
                 (int) p.getX(), (int) p.getY(), null);
         p.setLocation(p.getX() + 20, p.getY());
@@ -172,15 +176,15 @@ public class GameState {
         g.drawImage(Assets.lifeIco, (int) p.getX(), (int) p.getY(), null);
     }
 
-    private void drawSA1(Graphics g){
-            Point p = new Point(200,25);
-            if(player.isSA1Available()){
-                g.drawImage(Assets.numbersImg[Integer.parseInt("1")],
-                        (int) p.getX(), (int) p.getY(), null);
-            }else {
-                g.drawImage(Assets.numbersImg[Integer.parseInt("0")],
-                        (int) p.getX(), (int) p.getY(), null);
-            }
+    private void drawSA1(Graphics g) {
+        Point p = new Point(0, 695);
+        if (player.isSA1Available()) {
+            g.drawImage(Assets.activeSA1,
+                    (int) p.getX(), (int) p.getY(), null);
+        } else {
+            g.drawImage(Assets.inactiveSA1,
+                    (int) p.getX(), (int) p.getY(), null);
+        }
     }
 
     private boolean isPosOutsideComponent(Point pos) {
@@ -213,14 +217,18 @@ public class GameState {
             this.playAnimation(a.getCenter(), Assets.exp);
             a.remove();
             b.remove();
-        } else if ((a instanceof Player && b instanceof Wasp) || (b instanceof Player && a instanceof Wasp)) {
+            explosionSound.play();
+        } else if (((a instanceof Player && b instanceof Wasp) || (b instanceof Player && a instanceof Wasp)) && !Player.trullyInvincible) {
             //TODO Quitar la vida
-            if(Player.numVidas != 0) Player.numVidas--;
+            explosionSound.play();
+            if (Player.numVidas != 0) Player.numVidas--;
             if ((Player.numVidas > 0)) {
                 if (a instanceof Player) {
                     this.playAnimation(a.getCenter(), Assets.exp); //TODO Cambiar animación a golpe
+                    Player.invincible = true;
                     b.remove();
                 } else {
+                    Player.invincible = true;
                     a.remove();
                     this.playAnimation(b.getCenter(), Assets.exp); //TODO Cambiar animación a golpe
                 }

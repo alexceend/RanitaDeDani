@@ -21,8 +21,16 @@ public class Player extends MovingObject {
     private long lastRecharge = System.currentTimeMillis();
     private long lastTimeSA1 = System.currentTimeMillis();
 
+    public static boolean invincible, visible, trullyInvincible;
+    private Chronometer invincibleTime, flickerTime;
+
+    private Sound shoot;
+
     public Player(Point center, BufferedImage texture, GameState gameState) {
         super(center, new Vector2D(0, 1), texture, gameState);
+        invincibleTime = new Chronometer();
+        flickerTime = new Chronometer();
+        shoot = new Sound(Assets.playerShoot);
     }
 
     public boolean isSA1Available(){
@@ -30,6 +38,25 @@ public class Player extends MovingObject {
     }
     @Override
     public void update() {
+        if(Player.invincible) {
+            invincibleTime.run(Constants.INVINCIBLE_TIME);
+            Player.invincible = false;
+        }
+
+        if(!invincibleTime.isRunning()){
+            Player.invincible = false;
+            Player.visible = true;
+            Player.trullyInvincible = false;
+        }
+
+        if(invincibleTime.isRunning()){
+            if(!flickerTime.isRunning()){
+                flickerTime.run(Constants.FLICKER_TIME);
+                    Player.visible = !Player.visible;
+            }
+            Player.trullyInvincible = true;
+        }
+
         Point mousePoint = Mouse.getPos();
         SwingUtilities.convertPointFromScreen(mousePoint, canvas); // Converts the screen position to the actual relative position of canvas
         // NOT USE window because the white stuff in top of the window is also taken into account, so there will be a small "bug"
@@ -39,17 +66,19 @@ public class Player extends MovingObject {
 
         //System.out.println("ANGLE: "+angle);
 
-        if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > Constants.FIRERATE && numVidas > 0) {
+        if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > Constants.FIRERATE && numVidas > 0 && !trullyInvincible) {
             if (numBullets > 0) {
                 gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball, this.gameState));
                 lastTime = System.currentTimeMillis();
                 numBullets--;
+                shoot.play();
             }
         }
 
+        if(shoot.getFramePosition() > 8000) shoot.stop();
+
         if(Keyboard.SA1 && (System.currentTimeMillis() - lastTimeSA1) > Constants.SA1FIRERATE
                 && numVidas > 0 && numBullets >= 4){
-            System.out.println("FIRE!!");
             gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(1,0), Assets.ball, this.gameState));
             gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(-1,0), Assets.ball, this.gameState));
             gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(0,1), Assets.ball, this.gameState));
@@ -60,6 +89,7 @@ public class Player extends MovingObject {
             gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(-1,1), Assets.ball, this.gameState));
             lastTimeSA1 = System.currentTimeMillis();
             numBullets-=4;
+            shoot.play();
         }
 
         if((System.currentTimeMillis() - lastRecharge) > 3000){
@@ -67,10 +97,14 @@ public class Player extends MovingObject {
             numBullets++;
         }
 
+        invincibleTime.update();
+        flickerTime.update();
     }
 
     @Override
     public void draw(Graphics g) {
+
+        if(!visible) return;
         Point mousePoint = Mouse.getPos();
         SwingUtilities.convertPointFromScreen(mousePoint, canvas);
 
@@ -79,9 +113,7 @@ public class Player extends MovingObject {
         at.rotate(direction.getActualAngle(mousePoint),
                 (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
 
-        //g.drawLine((int) position.getX(), (int) position.getY(), (int) Mouse.getPosX(), (int) Mouse.getPosY());
         if(gameState.getMovingObjects().contains(this)) ((Graphics2D) g).drawImage(texture, at, null);
-        //g2d.drawImage(texture, (int) position.getX(), (int) position.getY(), null);
 
     }
 }

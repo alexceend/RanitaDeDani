@@ -14,6 +14,8 @@ public class Constants {
     public static final int FIRERATE = 100;
     public static final int SA1FIRERATE = 10000;
     public static final double DELTAANGLE = 0.1;
+    public static final long FLICKER_TIME = 200;
+    public static final long INVINCIBLE_TIME = 3000;
 
     //BALL PROP
     public static final double BALL_VEL = 10.0;

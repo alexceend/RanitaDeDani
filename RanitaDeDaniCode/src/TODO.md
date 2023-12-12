@@ -5,3 +5,4 @@ IDEAS:
 4. Las avispas hacen daño y no suman saliva pero si puntos
 5. Sistema de puntos
 6. Muerte jugador animación
+7. Power ups
