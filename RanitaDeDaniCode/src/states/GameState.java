@@ -162,16 +162,13 @@ public class GameState {
     private void drawLifes(Graphics g) {
         Point p = new Point(10, 25);
         String lifesToString = Integer.toString(Player.numVidas);
+        if(Player.numVidas < 0) lifesToString = "0"; //Pone vidas a 0 si baja de 0 para evitar errores
         g.drawImage(Assets.numbersImg[Integer.parseInt(lifesToString)],
                 (int) p.getX(), (int) p.getY(), null);
         p.setLocation(p.getX() + 20, p.getY());
         g.drawImage(Assets.xImg, (int) p.getX(), (int) p.getY(), null);
         p.setLocation(p.getX() + 20, p.getY());
         g.drawImage(Assets.lifeIco, (int) p.getX(), (int) p.getY(), null);
-    }
-
-    private void drawBullets(Graphics g) {
-
     }
 
     private boolean isPosOutsideComponent(Point pos) {
@@ -206,7 +203,7 @@ public class GameState {
             b.remove();
         } else if ((a instanceof Player && b instanceof Wasp) || (b instanceof Player && a instanceof Wasp)) {
             //TODO Quitar la vida
-            Player.numVidas--;
+            if(Player.numVidas != 0) Player.numVidas--;
             if ((Player.numVidas > 0)) {
                 if (a instanceof Player) {
                     this.playAnimation(a.getCenter(), Assets.exp); //TODO Cambiar animación a golpe

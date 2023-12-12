@@ -35,7 +35,7 @@ public class Player extends MovingObject {
 
         //System.out.println("ANGLE: "+angle);
 
-        if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > Constants.FIRERATE) {
+        if (Mouse.CLICKING && (System.currentTimeMillis() - lastTime) > Constants.FIRERATE && numVidas > 0) {
             if (numBullets > 0) {
                 gameState.getMovingObjects().add(new Ball(this.center.getLocation(), this.direction.toUnitary(), Assets.ball, this.gameState));
                 lastTime = System.currentTimeMillis();
