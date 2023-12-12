@@ -135,6 +135,7 @@ public class GameState {
         drawScore(g);
         drawLifes(g);
         drawNumBullets(g);
+        drawSA1(g);
     }
 
     private void drawScore(Graphics g) {
@@ -169,6 +170,17 @@ public class GameState {
         g.drawImage(Assets.xImg, (int) p.getX(), (int) p.getY(), null);
         p.setLocation(p.getX() + 20, p.getY());
         g.drawImage(Assets.lifeIco, (int) p.getX(), (int) p.getY(), null);
+    }
+
+    private void drawSA1(Graphics g){
+            Point p = new Point(200,25);
+            if(player.isSA1Available()){
+                g.drawImage(Assets.numbersImg[Integer.parseInt("1")],
+                        (int) p.getX(), (int) p.getY(), null);
+            }else {
+                g.drawImage(Assets.numbersImg[Integer.parseInt("0")],
+                        (int) p.getX(), (int) p.getY(), null);
+            }
     }
 
     private boolean isPosOutsideComponent(Point pos) {

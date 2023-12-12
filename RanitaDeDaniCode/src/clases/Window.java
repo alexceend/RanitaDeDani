@@ -1,6 +1,7 @@
 package clases;
 
 import graphics.Assets;
+import input.Keyboard;
 import input.Mouse;
 import states.GameState;
 
@@ -20,6 +21,7 @@ public class Window extends JFrame implements Runnable {
     private int AVERAGEFPS = FPS;
 
     private GameState gameState;
+    private Keyboard keyboard = new Keyboard();
 
     public Window() {
         super.setTitle("Ranita Loca");
@@ -36,6 +38,7 @@ public class Window extends JFrame implements Runnable {
         canvas.setFocusable(true); //Reciben enrtadas por parte del teclado
 
         canvas.addMouseListener(new Mouse());
+        canvas.addKeyListener(keyboard);
         super.add(canvas);
     }
 
@@ -45,6 +48,7 @@ public class Window extends JFrame implements Runnable {
     }
 
     private void update() {
+        keyboard.update();
         gameState.update();
     }
 

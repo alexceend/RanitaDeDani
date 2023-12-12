@@ -2,6 +2,7 @@ package gameObjects;
 
 import clases.Window;
 import graphics.Assets;
+import input.Keyboard;
 import input.Mouse;
 import math.Vector2D;
 import states.GameState;
@@ -10,7 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.HashSet;
 
 public class Player extends MovingObject {
 
@@ -19,11 +19,15 @@ public class Player extends MovingObject {
     public static int numBullets = 5;
     public static int numVidas = 3;
     private long lastRecharge = System.currentTimeMillis();
+    private long lastTimeSA1 = System.currentTimeMillis();
 
     public Player(Point center, BufferedImage texture, GameState gameState) {
         super(center, new Vector2D(0, 1), texture, gameState);
     }
 
+    public boolean isSA1Available(){
+        return ((System.currentTimeMillis() - lastTimeSA1) > Constants.SA1FIRERATE);
+    }
     @Override
     public void update() {
         Point mousePoint = Mouse.getPos();
@@ -41,6 +45,21 @@ public class Player extends MovingObject {
                 lastTime = System.currentTimeMillis();
                 numBullets--;
             }
+        }
+
+        if(Keyboard.SA1 && (System.currentTimeMillis() - lastTimeSA1) > Constants.SA1FIRERATE
+                && numVidas > 0 && numBullets >= 4){
+            System.out.println("FIRE!!");
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(1,0), Assets.ball, this.gameState));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(-1,0), Assets.ball, this.gameState));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(0,1), Assets.ball, this.gameState));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(0,-1), Assets.ball, this.gameState));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(1,1), Assets.ball, this.gameState));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(-1,-1), Assets.ball, this.gameState));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(1,-1), Assets.ball, this.gameState));
+            gameState.getMovingObjects().add(new Ball(this.center.getLocation(), new Vector2D(-1,1), Assets.ball, this.gameState));
+            lastTimeSA1 = System.currentTimeMillis();
+            numBullets-=4;
         }
 
         if((System.currentTimeMillis() - lastRecharge) > 3000){

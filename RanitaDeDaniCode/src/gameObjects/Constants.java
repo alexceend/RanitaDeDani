@@ -12,6 +12,7 @@ public class Constants {
 
     //player cosas
     public static final int FIRERATE = 100;
+    public static final int SA1FIRERATE = 10000;
     public static final double DELTAANGLE = 0.1;
 
     //BALL PROP
