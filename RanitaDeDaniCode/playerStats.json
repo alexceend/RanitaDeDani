@@ -1,0 +1,18 @@
+[
+  {
+    "coins": 100,
+    "max_score": 1000,
+    "skins": {
+      "robo": true,
+      "xmas": true,
+      "chinese_hat": true,
+      "rayman_blue": true,
+      "winged": true,
+      "valentines": true,
+      "blunt_frog": true,
+      "skater_frog": true,
+      "pou": true,
+      "jojofied": true
+    }
+  }
+]
