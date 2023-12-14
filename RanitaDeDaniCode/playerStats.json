@@ -3,7 +3,7 @@
     "coins": 100,
     "max_score": 1000,
     "skins": {
-      "robo": true,
+      "robo_frog": true,
       "xmas": true,
       "chinese_hat": true,
       "rayman_blue": true,
@@ -12,7 +12,9 @@
       "blunt_frog": true,
       "skater_frog": true,
       "pou": true,
-      "jojofied": true
+      "jojofied": true,
+      "alex_frog": true,
+      "cat_frog": true
     }
   }
 ]

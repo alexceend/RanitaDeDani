@@ -3,7 +3,10 @@ package clases;
 import graphics.Assets;
 import input.Keyboard;
 import input.Mouse;
+import input.MouseGUI;
 import states.GameState;
+import states.MenuState;
+import states.State;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +22,8 @@ public class Window extends JFrame implements Runnable {
     private final int FPS = 144;
     private double delta = 0;
     private int AVERAGEFPS = FPS;
-
-    private GameState gameState;
     private Keyboard keyboard = new Keyboard();
+    private MouseGUI mouseGUI = new MouseGUI();
 
     public Window() {
         super.setTitle("Ranita Loca");
@@ -39,6 +41,8 @@ public class Window extends JFrame implements Runnable {
 
         canvas.addMouseListener(new Mouse());
         canvas.addKeyListener(keyboard);
+        canvas.addMouseListener(mouseGUI);
+        canvas.addMouseMotionListener(mouseGUI);
         super.add(canvas);
     }
 
@@ -49,7 +53,7 @@ public class Window extends JFrame implements Runnable {
 
     private void update() {
         keyboard.update();
-        gameState.update();
+        State.getCurrentState().update();
     }
 
     private void draw() {
@@ -62,10 +66,16 @@ public class Window extends JFrame implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         //-------------Dibujar---------
+       /* if(State.getCurrentState() instanceof GameState){
+            System.out.println(GameState.getCurrentState());
+            g.drawImage(Assets.bg, 0, 0, null);
+        }else{
+            g.fillRect(0, 0, WIDTH, HEIGHT); //Limpiar pantalla a cada frame
+        }*/
         g.fillRect(0, 0, WIDTH, HEIGHT); //Limpiar pantalla a cada frame
-        gameState.draw(g);
 
-        //g.drawImage(Assets.player, WIDTH / 2, HEIGHT / 2, null);
+        State.getCurrentState().draw(g);
+
         g.setColor(Color.black);
         g.drawString("" + AVERAGEFPS, 10, 20);
 
@@ -79,7 +89,7 @@ public class Window extends JFrame implements Runnable {
 
     private void init() {
         Assets.init();
-        gameState = new GameState();
+        State.changeState(new MenuState());
     }
 
     @Override

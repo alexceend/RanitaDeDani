@@ -102,7 +102,20 @@ public class Player extends MovingObject {
     }
 
     @Override
+    public void remove() {
+        super.remove();
+        gameState.gameOver();
+    }
+
+    public static void restartProperties(){
+        Player.numVidas = Constants.VIDAS_INICIO;
+        Player.numBullets = Constants.BALAS_INICIO;
+    }
+
+    @Override
     public void draw(Graphics g) {
+
+        g.drawImage(Assets.bg, 0, 0, null);
 
         if(!visible) return;
         Point mousePoint = Mouse.getPos();

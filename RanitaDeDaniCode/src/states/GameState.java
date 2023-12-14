@@ -3,20 +3,30 @@ package states;
 import gameObjects.*;
 import graphics.Animation;
 import graphics.Assets;
+import graphics.Text;
+import io.JSONParser;
+import io.ScoreData;
 import math.Vector2D;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
-public class GameState {
+public class GameState extends State{
     private final Player player;
     public static final HashSet<MovingObject> movingObjects = new HashSet<>();
+    public static final HashSet<Message> messages = new HashSet<>();
     private ArrayList<Animation> animations = new ArrayList<Animation>();
 
     private Sound explosionSound = new Sound(Assets.explosion);
+
+    private Chronometer gameOverTimer = new Chronometer();
+    private boolean gameOver = false;
 
     private int score = 0;
     private int flys;
@@ -106,6 +116,21 @@ public class GameState {
     }
 
     public void update() {
+        if(gameOver){// && !gameOverTimer.isRunning()){
+
+            try {
+                ArrayList<ScoreData> dataList = JSONParser.readFile();
+                dataList.add(new ScoreData(score));
+                JSONParser.writeFile(dataList);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            GameState.changeState(new MenuState());
+        }
         if(explosionSound.getFramePosition() > 5000) explosionSound.stop();
 
         player.update();
@@ -132,6 +157,7 @@ public class GameState {
         Graphics2D g2d = (Graphics2D) g;
         player.draw(g);
         for (MovingObject mo : new HashSet<>(movingObjects)) mo.draw(g);
+        for(Message m : new HashSet<>(messages)) m.draw((Graphics2D) g);
         for (Animation anim : animations) {
             g2d.drawImage(anim.getCurrentFrame(), (int) anim.getCenter().getX(), (int) anim.getCenter().getY(), null);
         }
@@ -244,5 +270,17 @@ public class GameState {
         }
     }
 
+    public void gameOver(){
+        Message gameOverMsg = new Message(
+                new Point(Constants.WIDTH/2, Constants.HEIGHT/2),
+                true,
+                "GAME OVER",
+                Color.white,
+                true
+        );
+        messages.add(gameOverMsg);
+        gameOverTimer.run(Constants.GAME_OVER_TIME);
+        gameOver = true;
+    }
 
 }
