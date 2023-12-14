@@ -8,12 +8,14 @@ import ui.Action;
 import ui.Button;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MenuState extends State{
 
     ArrayList<Button> buttons = new ArrayList<Button>();
     public MenuState(){
+        //GameState
         buttons.add(new Button(
                 Assets.greyButtonRec,
                 Assets.blueButtRec,
@@ -29,6 +31,7 @@ public class MenuState extends State{
                 }
         ));
 
+        //EXIT
         buttons.add(new Button(
                 Assets.greyButtonRec,
                 Assets.blueButtRec,
@@ -43,6 +46,7 @@ public class MenuState extends State{
                 }
         ));
 
+        //HighScore
         buttons.add(new Button(
                 Assets.greyButtonRec,
                 Assets.blueButtRec,
@@ -56,10 +60,25 @@ public class MenuState extends State{
                     }
                 }
         ));
+
+        //Skins
+        buttons.add(new Button(
+                Assets.greyButtonRec,
+                Assets.blueButtRec,
+                Constants.WIDTH / 2 - Assets.greyButtonRec.getWidth() / 2,
+                Constants.HEIGHT / 2 + 100,
+                Constants.SKINS,
+                new Action() {
+                    @Override
+                    public void doAction() throws FileNotFoundException {
+                        State.changeState(new SkinState());
+                    }
+                }
+        ));
     }
 
     @Override
-    public void update() {
+    public void update() throws FileNotFoundException {
         for(Button b : buttons){
             b.update();
         }

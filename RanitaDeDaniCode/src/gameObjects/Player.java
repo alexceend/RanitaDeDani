@@ -26,8 +26,17 @@ public class Player extends MovingObject {
 
     private Sound shoot;
 
+    public static boolean[] skins = new boolean[13];
+    public static int skinIndex = 0;
+
     public Player(Point center, BufferedImage texture, GameState gameState) {
         super(center, new Vector2D(0, 1), texture, gameState);
+        for(int i = 0; i < skins.length; i++){
+            if(skins[i]){
+                skinIndex = i;
+                this.texture = Assets.player[i];
+            }
+        }
         invincibleTime = new Chronometer();
         flickerTime = new Chronometer();
         shoot = new Sound(Assets.playerShoot);

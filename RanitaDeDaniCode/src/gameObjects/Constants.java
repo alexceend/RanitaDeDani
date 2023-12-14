@@ -40,10 +40,13 @@ public class Constants {
     public static final String SETTINGS = "SETTINGS";
     public static final String RETURN = "RETURN";
     public static final String HIGH_SCORE = "HIGHSCORE";
+    public static final String SKINS = "SKINS";
     public static final String SCORE = "SCORE";
     public static final String DATE = "DATE";
+    public static final String ROBO_FROG = "ROBO FROG";
 
-    public static final String SCORE_PATH = FileSystemView.getFileSystemView().getDefaultDirectory().getPath() +
-            "\\Frog_Game\\data.json";
+    public static final String GENERAL_PATH = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
 
+    public static final String SCORE_PATH = GENERAL_PATH + "\\Frog_Game\\data.json";
+    public static final String SKIN_SCORE_PATH = GENERAL_PATH + "\\Frog_Game\\skinData.json";
 }

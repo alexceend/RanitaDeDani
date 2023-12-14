@@ -1,6 +1,7 @@
 package states;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 
 public abstract class State {
 
@@ -14,6 +15,6 @@ public abstract class State {
         currentState = newState;
     }
 
-    public abstract void update();
+    public abstract void update() throws FileNotFoundException;
     public abstract void draw(Graphics g);
 }

@@ -11,6 +11,7 @@ import states.State;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.FileNotFoundException;
 
 public class Window extends JFrame implements Runnable {
     public static Window instance;
@@ -53,7 +54,11 @@ public class Window extends JFrame implements Runnable {
 
     private void update() {
         keyboard.update();
-        State.getCurrentState().update();
+        try {
+            State.getCurrentState().update();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void draw() {

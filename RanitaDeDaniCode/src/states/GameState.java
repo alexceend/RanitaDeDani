@@ -32,7 +32,7 @@ public class GameState extends State{
     private int flys;
 
     public GameState() {
-        player = new Player(new Point(400, 400), Assets.player, this);
+        player = new Player(new Point(400, 400), Assets.player[0], this);
         movingObjects.add(player);
         flys = 1;
         startWave();

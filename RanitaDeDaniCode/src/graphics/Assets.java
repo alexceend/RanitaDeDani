@@ -10,13 +10,13 @@ public class Assets {
     //public static BufferedImage[] hit = new BufferedImage[5];
 
     public static BufferedImage[] numbersImg = new BufferedImage[10];
-    public static BufferedImage player, ball, fly, wasp, xImg, lifeIco, activeSA1, inactiveSA1, bg;
+    public static BufferedImage[] player = new BufferedImage[2]; //serán más
+    public static BufferedImage ball, fly, wasp, xImg, lifeIco, activeSA1, inactiveSA1, bg;
     public static BufferedImage orangeButtSQ, blueButtRec, greyButtonRec, greenCheckButt, redcrossButt;
 
     public static Clip explosion, playerShoot;
 
     public static void init(){
-        player = Loader.ImageLoader("/player.png");
         ball = Loader.ImageLoader("/ball.png");
         fly = Loader.ImageLoader("/fly.png");
         wasp = Loader.ImageLoader("/wasp.png");
@@ -36,6 +36,9 @@ public class Assets {
 
         for(int i = 0; i < exp.length; i++){
             exp[i] = Loader.ImageLoader("/waterDrop/" + i + ".png");
+        }
+        for(int i = 0; i < player.length; i++){
+            player[i] = Loader.ImageLoader("/skins/" + i + ".png");
         }
         for(int i = 0; i < death.length; i++){
             death[i] = Loader.ImageLoader("/playerDeath/" + i + ".png");

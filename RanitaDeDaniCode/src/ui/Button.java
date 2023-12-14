@@ -5,6 +5,7 @@ import input.MouseGUI;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 
 public class Button {
     private BufferedImage mouseOutImg, mouseInImage;
@@ -27,7 +28,7 @@ public class Button {
         this.action = action;
     }
 
-    public void update() {
+    public void update() throws FileNotFoundException {
         if (boundingBox.contains(MouseGUI.X, MouseGUI.Y)) {
             mouseIn = true;
         } else mouseIn = false;
