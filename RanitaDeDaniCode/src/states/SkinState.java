@@ -9,7 +9,7 @@ import ui.Action;
 import ui.Button;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class SkinState extends State {
@@ -19,6 +19,19 @@ public class SkinState extends State {
     private SkinData[] auxArray;
 
     public SkinState() throws FileNotFoundException {
+
+        File f = new File(Constants.SKIN_SCORE_PATH);
+        if(!f.exists()){
+            try {
+                f.createNewFile();
+                FileWriter fileWriter = new FileWriter(f);
+                PrintWriter out = new PrintWriter(fileWriter);
+                out.println(Constants.JSONINIT);
+                out.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         //return
         returnButton = new ui.Button(
                 Assets.greyButtonRec,

@@ -49,4 +49,73 @@ public class Constants {
 
     public static final String SCORE_PATH = GENERAL_PATH + "\\Frog_Game\\data.json";
     public static final String SKIN_SCORE_PATH = GENERAL_PATH + "\\Frog_Game\\skinData.json";
+
+
+    public static final String JSONINIT = "[\n" +
+            "  {\n" +
+            "    \"name\": \"default\",\n" +
+            "    \"comprada\": true,\n" +
+            "    \"index\": 0\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"robo_frog\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 1\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"xmas\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 2\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"chinese_hat\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 3\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"rayman_blue\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 4\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"winged\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 5\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"valentines\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 6\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"blunt_frog\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 7\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"skater_frog\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 8\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"pou\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 9\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"jojofied\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 10\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"alex_frog\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 11\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"name\": \"cat_frog\",\n" +
+            "    \"comprada\": false,\n" +
+            "    \"index\": 12\n" +
+            "  }\n" +
+            "]";
 }
