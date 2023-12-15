@@ -27,8 +27,8 @@ public class ScoreState extends State {
         returnButton = new Button(
                 Assets.greyButtonRec,
                 Assets.blueButtRec,
-                Constants.WIDTH - Assets.greyButtonRec.getWidth() * 2,
-                Constants.HEIGHT / 2 + 100,
+                50,
+                Constants.HEIGHT - 100,
                 Constants.RETURN,
                 new Action() {
                     @Override
@@ -72,11 +72,11 @@ public class ScoreState extends State {
 
         Arrays.sort(auxArray, scoreComparator);
 
-        Point scorePos = new Point(Constants.WIDTH / 2 - 200, 100);
-        Point datePos = new Point(Constants.WIDTH / 2 + 200, 100);
+        Point scorePos = new Point(Constants.WIDTH / 2 - 300, 100);
+        Point datePos = new Point(Constants.WIDTH / 2 + 100, 100);
 
-        Text.drawText(g, Constants.SCORE, scorePos, true, Color.white);
-        Text.drawText(g, Constants.DATE, datePos, true, Color.white);
+        Text.drawText(g, Constants.SCORE, scorePos, false, Color.white, Assets.titleFontBig);
+        Text.drawText(g, Constants.DATE, datePos, false, Color.white, Assets.titleFontBig);
 
         scorePos.setLocation(scorePos.getX(), scorePos.getY() + 40);
         datePos.setLocation(datePos.getX(), datePos.getY() + 40);
@@ -84,8 +84,8 @@ public class ScoreState extends State {
         for (int i = auxArray.length - 1; i > -1; i--) {
             ScoreData d = auxArray[i];
 
-            Text.drawText(g, Integer.toString(d.getScore()), scorePos, true, Color.white);
-            Text.drawText(g, d.getDate(), datePos, true, Color.white);
+            Text.drawText(g, Integer.toString(d.getScore()), scorePos, false, Color.white, Assets.normalFontMedium);
+            Text.drawText(g, d.getDate(), datePos, false, Color.white, Assets.normalFontMedium);
 
             scorePos.setLocation(scorePos.getX(), scorePos.getY() + 40);
             datePos.setLocation(datePos.getX(), datePos.getY() + 40);

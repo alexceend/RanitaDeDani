@@ -1,6 +1,7 @@
 package io;
 
 import gameObjects.Constants;
+import gameObjects.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -36,7 +37,7 @@ public class JSONParser {
     public static ArrayList<SkinData> readSkinFile() throws FileNotFoundException {
         ArrayList<SkinData> dataList = new ArrayList<SkinData>();
 
-        File file = new File(Constants.SKIN_SCORE_PATH);
+        File file = new File(Constants.SKIN_PATH);
         if(!file.exists() || file.length() == 0){
             return dataList;
         }
@@ -50,6 +51,33 @@ public class JSONParser {
             data.setName(obj.getString("name"));
             data.setComprada(obj.getBoolean("comprada"));
             data.setIndex(obj.getInt("index"));
+            dataList.add(data);
+        }
+
+        for (SkinData sk : dataList){
+            if(sk.getComprada()){
+                Player.unlocked_skins[sk.getIndex()] = true;
+            }
+        }
+        return dataList;
+
+    }
+
+    public static ArrayList<MoneyData> readMoneyData() throws FileNotFoundException {
+        ArrayList<MoneyData> dataList = new ArrayList<MoneyData>();
+
+        File file = new File(Constants.MONEY_PATH);
+        if(!file.exists() || file.length() == 0){
+            return dataList;
+        }
+        JSONTokener parser = new JSONTokener(new FileInputStream(file));
+        JSONArray JSONList = new JSONArray(parser);
+
+        for(int i = 0; i < JSONList.length(); i++){
+            JSONObject obj = (JSONObject) JSONList.get(i);
+            MoneyData data = new MoneyData();
+
+            data.setAmount(obj.getInt("amount"));
             dataList.add(data);
         }
         return dataList;
@@ -78,7 +106,7 @@ public class JSONParser {
     }
 
     public static void writeSkinFile(ArrayList<SkinData> dataList) throws IOException {
-        File output = new File(Constants.SKIN_SCORE_PATH);
+        File output = new File(Constants.SKIN_PATH);
         output.getParentFile().mkdirs();
         output.createNewFile();
 
@@ -90,6 +118,24 @@ public class JSONParser {
             obj.put("comprada", data.getComprada());
             obj.put("index", data.getIndex());
 
+            JSONList.put(obj);
+        }
+
+        BufferedWriter writer = Files.newBufferedWriter(Paths.get(output.toURI()));
+        JSONList.write(writer);
+        writer.close();
+    }
+
+    public static void writeMoneyFile(ArrayList<MoneyData> dataList) throws IOException {
+        File output = new File(Constants.MONEY_PATH);
+        output.getParentFile().mkdirs();
+        output.createNewFile();
+
+        JSONArray JSONList = new JSONArray();
+
+        for(MoneyData data : dataList){
+            JSONObject obj = new JSONObject();
+            obj.put("amount", data.getAmount());
             JSONList.put(obj);
         }
 

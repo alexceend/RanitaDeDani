@@ -3,17 +3,18 @@ package states;
 import gameObjects.*;
 import graphics.Animation;
 import graphics.Assets;
-import graphics.Text;
+import input.Keyboard;
 import io.JSONParser;
+import io.MoneyData;
 import io.ScoreData;
 import math.Vector2D;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -33,6 +34,10 @@ public class GameState extends State{
 
     public GameState() {
         player = new Player(new Point(400, 400), Assets.player[0], this);
+        for(MovingObject mo : new HashSet<>(movingObjects)){
+            mo.remove();
+        }
+        System.out.println(movingObjects.size());
         movingObjects.add(player);
         flys = 1;
         startWave();
@@ -116,6 +121,10 @@ public class GameState extends State{
     }
 
     public void update() {
+        if(Keyboard.KILL){
+            gameOver();
+            Keyboard.KILL = false;
+        }
         if(gameOver){// && !gameOverTimer.isRunning()){
 
             try {
@@ -167,6 +176,7 @@ public class GameState extends State{
         drawNumBullets(g);
         drawSA1(g);
     }
+
 
     private void drawScore(Graphics g) {
         Point p = new Point(700, 25);
@@ -271,6 +281,27 @@ public class GameState extends State{
     }
 
     public void gameOver(){
+        //Agregar el dinero
+
+        try {
+            //Guardar el nuevo dinero en una lista
+            ArrayList<MoneyData> lastMoneyList = JSONParser.readMoneyData();
+            int finalMoney = score / 10 + lastMoneyList.get(0).getAmount();
+            lastMoneyList.get(0).setAmount(finalMoney);
+
+            //Borrar el dinero anterior
+            File f = new File(Constants.MONEY_PATH);
+            f.delete();
+
+            //Creear nuevo json con el dinero
+            JSONParser.writeMoneyFile(lastMoneyList);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //Mensaje
         Message gameOverMsg = new Message(
                 new Point(Constants.WIDTH/2, Constants.HEIGHT/2),
                 true,

@@ -1,9 +1,12 @@
 package clases;
 
+import gameObjects.Constants;
+import gameObjects.Player;
 import graphics.Assets;
 import input.Keyboard;
 import input.Mouse;
 import input.MouseGUI;
+import io.JSONParser;
 import states.GameState;
 import states.MenuState;
 import states.State;
@@ -11,7 +14,7 @@ import states.State;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.io.FileNotFoundException;
+import java.io.*;
 
 public class Window extends JFrame implements Runnable {
     public static Window instance;
@@ -45,6 +48,9 @@ public class Window extends JFrame implements Runnable {
         canvas.addMouseListener(mouseGUI);
         canvas.addMouseMotionListener(mouseGUI);
         super.add(canvas);
+
+        //Cargar dinero
+        Player.loadMoney();
     }
 
     public static void main(String[] args) {
@@ -53,6 +59,7 @@ public class Window extends JFrame implements Runnable {
     }
 
     private void update() {
+        Player.loadMoney();
         keyboard.update();
         try {
             State.getCurrentState().update();
@@ -78,6 +85,8 @@ public class Window extends JFrame implements Runnable {
             g.fillRect(0, 0, WIDTH, HEIGHT); //Limpiar pantalla a cada frame
         }*/
         g.fillRect(0, 0, WIDTH, HEIGHT); //Limpiar pantalla a cada frame
+        g.setColor(Color.PINK);
+        g.fillRect(0,0,WIDTH,HEIGHT);
 
         State.getCurrentState().draw(g);
 

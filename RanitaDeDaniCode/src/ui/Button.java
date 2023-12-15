@@ -1,5 +1,7 @@
 package ui;
 
+import graphics.Assets;
+import graphics.Text;
 import input.Mouse;
 import input.MouseGUI;
 
@@ -45,7 +47,14 @@ public class Button {
             g.drawImage(mouseOutImg, boundingBox.x, boundingBox.y, null);
         }
 
-        g.drawString(text, (int) (boundingBox.getX() + boundingBox.getWidth()/2),
-                (int) (boundingBox.getY() + boundingBox.getHeight()/2));
+        Text.drawText(
+                g,
+                text,
+                new Point( (int) (boundingBox.getX() + boundingBox.getWidth()/2 - 20),
+                        (int) (boundingBox.getY() + boundingBox.getHeight()/2)),
+                true,
+                Color.black,
+                Assets.titleFontMedium
+        );
     }
 }

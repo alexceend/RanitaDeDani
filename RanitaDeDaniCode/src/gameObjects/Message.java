@@ -2,6 +2,7 @@ package gameObjects;
 
 import java.awt.*;
 
+import graphics.Assets;
 import graphics.Text;
 import states.GameState;
 
@@ -35,7 +36,7 @@ public class Message {
 
         //g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
-        Text.drawText(g2d, text, position, center, color);
+        Text.drawText(g2d, text, position, center, color, Assets.normalFontTiny);
 
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 

@@ -1,6 +1,7 @@
 package graphics;
 
 import javax.sound.sampled.Clip;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
@@ -11,8 +12,13 @@ public class Assets {
 
     public static BufferedImage[] numbersImg = new BufferedImage[10];
     public static BufferedImage[] player = new BufferedImage[2]; //serán más
-    public static BufferedImage ball, fly, wasp, xImg, lifeIco, activeSA1, inactiveSA1, bg;
-    public static BufferedImage orangeButtSQ, blueButtRec, greyButtonRec, greenCheckButt, redcrossButt;
+    public static BufferedImage[] unlockedSkin = new BufferedImage[2]; //serán más
+    public static BufferedImage[] lockedSkin = new BufferedImage[2]; //serán más
+    public static BufferedImage ball, fly, wasp, xImg, lifeIco, activeSA1, inactiveSA1, bg, coinSpr;
+    public static BufferedImage orangeButtSQ, blueButtRec, greyButtonRec, greenCheckButt, redcrossButt, bluecrossButt, bluecheckButt;
+
+    public static Font titleFontBig, titleFontMedium, titleFontTiny;
+    public static Font normalFontBig, normalFontMedium, normalFontTiny;
 
     public static Clip explosion, playerShoot;
 
@@ -29,9 +35,19 @@ public class Assets {
         greyButtonRec = Loader.ImageLoader("/ui/greyb1.png");
         greenCheckButt = Loader.ImageLoader("/ui/green_boxCheckmark.png");
         redcrossButt = Loader.ImageLoader("/ui/red_boxCross.png");
+        bluecrossButt = Loader.ImageLoader("/ui/blue_boxCross.png");
+        bluecheckButt = Loader.ImageLoader("/ui/blue_boxCheckmark.png");
+        coinSpr = Loader.ImageLoader("/coin.png");
 
         explosion = Loader.loadSound("/sounds/explosion.wav");
         playerShoot = Loader.loadSound("/sounds/playerShoot.wav");
+
+        titleFontBig = Loader.loadFont("/fonts/TOADFROG.ttf", 42);
+        titleFontMedium = Loader.loadFont("/fonts/TOADFROG.ttf", 20);
+        titleFontTiny = Loader.loadFont("/fonts/TOADFROG.ttf", 13);
+        normalFontBig = Loader.loadFont("/fonts/BubblyFrog.ttf", 42);
+        normalFontMedium = Loader.loadFont("/fonts/BubblyFrog.ttf", 20);
+        normalFontTiny = Loader.loadFont("/fonts/BubblyFrog.ttf", 13);
 
 
         for(int i = 0; i < exp.length; i++){
@@ -39,6 +55,12 @@ public class Assets {
         }
         for(int i = 0; i < player.length; i++){
             player[i] = Loader.ImageLoader("/skins/" + i + ".png");
+        }
+        for(int i = 0; i < unlockedSkin.length; i++){
+            unlockedSkin[i] = Loader.ImageLoader("/unlocked/" + i + ".png");
+        }
+        for(int i = 0; i < lockedSkin.length; i++){
+            lockedSkin[i] = Loader.ImageLoader("/locked/" + i + ".png");
         }
         for(int i = 0; i < death.length; i++){
             death[i] = Loader.ImageLoader("/playerDeath/" + i + ".png");

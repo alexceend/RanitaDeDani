@@ -90,4 +90,15 @@ public class MenuState extends State{
             b.draw(g);
         }
     }
+
+    public static void drawMoney(Graphics g) {
+        Point p = new Point(650, 25);
+        String scoreToString = Integer.toString(Player.money);
+        for (int i = 0; i < scoreToString.length(); i++) {
+            g.drawImage(Assets.numbersImg[Integer.parseInt(scoreToString.substring(i, i + 1))],
+                    (int) p.getX(), (int) p.getY(), null);
+            p.setLocation(p.getX() + 20, p.getY());
+        }
+        g.drawImage(Assets.coinSpr,610, 20, null);
+    }
 }

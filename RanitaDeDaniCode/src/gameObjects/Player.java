@@ -4,6 +4,7 @@ import clases.Window;
 import graphics.Assets;
 import input.Keyboard;
 import input.Mouse;
+import io.JSONParser;
 import math.Vector2D;
 import states.GameState;
 
@@ -11,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.*;
+import java.security.Key;
 
 public class Player extends MovingObject {
 
@@ -22,11 +25,14 @@ public class Player extends MovingObject {
     private long lastTimeSA1 = System.currentTimeMillis();
 
     public static boolean invincible, visible, trullyInvincible;
+
+    public static int money;
     private Chronometer invincibleTime, flickerTime;
 
     private Sound shoot;
 
     public static boolean[] skins = new boolean[13];
+    public static boolean[] unlocked_skins = new boolean[13];
     public static int skinIndex = 0;
 
     public Player(Point center, BufferedImage texture, GameState gameState) {
@@ -40,6 +46,7 @@ public class Player extends MovingObject {
         invincibleTime = new Chronometer();
         flickerTime = new Chronometer();
         shoot = new Sound(Assets.playerShoot);
+        loadMoney();
     }
 
     public boolean isSA1Available(){
@@ -124,7 +131,7 @@ public class Player extends MovingObject {
     @Override
     public void draw(Graphics g) {
 
-        g.drawImage(Assets.bg, 0, 0, null);
+        //g.drawImage(Assets.bg, 0, 0, null);
 
         if(!visible) return;
         Point mousePoint = Mouse.getPos();
@@ -134,8 +141,27 @@ public class Player extends MovingObject {
         at.translate(center.getX() - (double) texture.getWidth() / 2, center.getY() - (double) texture.getHeight() / 2);
         at.rotate(direction.getActualAngle(mousePoint),
                 (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
-
+        
         if(gameState.getMovingObjects().contains(this)) ((Graphics2D) g).drawImage(texture, at, null);
 
+    }
+
+    public static void loadMoney(){
+        try {
+            File f = new File(Constants.MONEY_PATH);
+            if(!(f.exists())){
+                f.createNewFile();
+                FileWriter fw = new FileWriter(f);
+                PrintWriter out = new PrintWriter(f);
+                out.println(Constants.JSONMONEYINIT);
+                out.close();
+            }
+            money = JSONParser.readMoneyData().get(0).getAmount();
+        } catch (FileNotFoundException e) {
+            money = 0;
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

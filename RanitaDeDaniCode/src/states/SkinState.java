@@ -9,18 +9,21 @@ import ui.Action;
 import ui.Button;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
 public class SkinState extends State {
     private Button returnButton;
-    private Button roboFrogbutton;
 
-    private SkinData[] auxArray;
+    private Button roboFrogbutton, defaultFrogButton;
+
+    private BufferedImage[] skinsButton = new BufferedImage[Player.skins.length];
 
     public SkinState() throws FileNotFoundException {
+        checkUnlocked();
 
-        File f = new File(Constants.SKIN_SCORE_PATH);
+        File f = new File(Constants.SKIN_PATH);
         if(!f.exists()){
             try {
                 f.createNewFile();
@@ -36,8 +39,8 @@ public class SkinState extends State {
         returnButton = new ui.Button(
                 Assets.greyButtonRec,
                 Assets.blueButtRec,
-                Constants.WIDTH - Assets.greyButtonRec.getWidth() * 2,
-                Constants.HEIGHT / 2 + 100,
+                50,
+                Constants.HEIGHT - 100,
                 Constants.RETURN,
                 new Action() {
                     @Override
@@ -47,19 +50,54 @@ public class SkinState extends State {
                 }
         );
 
-        //roboFrogButton
-        roboFrogbutton = new ui.Button(
-                Assets.greyButtonRec,
-                Assets.blueButtRec,
-                Constants.WIDTH / 2,
-                Constants.HEIGHT / 4,
-                Constants.ROBO_FROG,
+        //defaultSkin
+        defaultFrogButton = new ui.Button(
+                skinsButton[0],
+                skinsButton[0],
+                100,
+                200,
+                "",
                 new Action() {
                     @Override
                     public void doAction() {
                         //Pone en el boolean todas a false y la robo a true
                         try {
                             ArrayList<SkinData> arrList = JSONParser.readSkinFile();
+
+                            for (int i = 0; i < Player.skins.length; i++){
+                                Player.skins[i] = false;
+                            }
+
+                            Player.skins[0] = arrList.get(0).getComprada();
+                            if (Player.skins[0]) {
+                                Player.skinIndex = 0;
+                            }else{
+                                State.changeState(new BuyState(0));
+                            }
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+        );
+
+        //roboFrogButton
+        roboFrogbutton = new ui.Button(
+                skinsButton[1],
+                skinsButton[1],
+                200,
+                200,
+                "",
+                new Action() {
+                    @Override
+                    public void doAction() {
+                        //Pone en el boolean todas a false y la robo a true
+                        try {
+                            ArrayList<SkinData> arrList = JSONParser.readSkinFile();
+
+                            for (int i = 0; i < Player.skins.length; i++){
+                                Player.skins[i] = false;
+                            }
 
                             Player.skins[1] = arrList.get(1).getComprada();
                             if (Player.skins[1]) {
@@ -84,13 +122,33 @@ public class SkinState extends State {
 
     @Override
     public void update() throws FileNotFoundException {
+        checkUnlocked();
         returnButton.update();
+        defaultFrogButton.update();
         roboFrogbutton.update();
     }
 
     @Override
     public void draw(Graphics g) {
+        g.drawImage(Assets.player[Player.skinIndex], 400, 100, null);
         returnButton.draw(g);
+        defaultFrogButton.draw(g);
         roboFrogbutton.draw(g);
+        MenuState.drawMoney(g);
+    }
+
+    public void checkUnlocked(){
+        try {
+            JSONParser.readSkinFile();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < Assets.player.length; i++){
+            if(Player.unlocked_skins[i]){
+                skinsButton[i] = Assets.unlockedSkin[i];
+            }else {
+                skinsButton[i] = Assets.lockedSkin[i];
+            }
+        }
     }
 }
