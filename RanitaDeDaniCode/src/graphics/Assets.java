@@ -11,9 +11,9 @@ public class Assets {
     //public static BufferedImage[] hit = new BufferedImage[5];
 
     public static BufferedImage[] numbersImg = new BufferedImage[10];
-    public static BufferedImage[] player = new BufferedImage[2]; //serán más
-    public static BufferedImage[] unlockedSkin = new BufferedImage[2]; //serán más
-    public static BufferedImage[] lockedSkin = new BufferedImage[2]; //serán más
+    public static BufferedImage[] player = new BufferedImage[12];
+    public static BufferedImage[] unlockedSkin = new BufferedImage[12];
+    public static BufferedImage[] lockedSkin = new BufferedImage[12];
     public static BufferedImage ball, fly, wasp, xImg, lifeIco, activeSA1, inactiveSA1, bg, coinSpr;
     public static BufferedImage orangeButtSQ, blueButtRec, greyButtonRec, greenCheckButt, redcrossButt, bluecrossButt, bluecheckButt;
 

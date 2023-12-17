@@ -31,8 +31,8 @@ public class Player extends MovingObject {
 
     private Sound shoot;
 
-    public static boolean[] skins = new boolean[13];
-    public static boolean[] unlocked_skins = new boolean[13];
+    public static boolean[] skins = new boolean[12];
+    public static boolean[] unlocked_skins = new boolean[12];
     public static int skinIndex = 0;
 
     public Player(Point center, BufferedImage texture, GameState gameState) {
@@ -141,7 +141,7 @@ public class Player extends MovingObject {
         at.translate(center.getX() - (double) texture.getWidth() / 2, center.getY() - (double) texture.getHeight() / 2);
         at.rotate(direction.getActualAngle(mousePoint),
                 (double) texture.getWidth() / 2, (double) texture.getWidth() / 2);
-        
+
         if(gameState.getMovingObjects().contains(this)) ((Graphics2D) g).drawImage(texture, at, null);
 
     }

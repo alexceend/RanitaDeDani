@@ -20,7 +20,7 @@ public class MenuState extends State{
                 Assets.greyButtonRec,
                 Assets.blueButtRec,
                 Constants.WIDTH / 2 - Assets.greyButtonRec.getWidth() / 2,
-                Constants.HEIGHT / 2 - Assets.greyButtonRec.getHeight() * 4,
+                Constants.HEIGHT / 2 - 100,
                 Constants.PLAY,
                 new Action() {
                     @Override
@@ -35,8 +35,8 @@ public class MenuState extends State{
         buttons.add(new Button(
                 Assets.greyButtonRec,
                 Assets.blueButtRec,
-                Constants.WIDTH / 2 - Assets.greyButtonRec.getWidth() / 2,
-                Constants.HEIGHT / 2 - Assets.greyButtonRec.getHeight() /2 - 300,
+                Constants.WIDTH - 250,
+                Constants.HEIGHT - 100,
                 Constants.EXIT,
                 new Action() {
                     @Override
@@ -89,6 +89,8 @@ public class MenuState extends State{
         for(Button b : buttons){
             b.draw(g);
         }
+
+        g.drawImage(Assets.player[0], 400 - Assets.player[0].getWidth()/2, 100, null);
     }
 
     public static void drawMoney(Graphics g) {

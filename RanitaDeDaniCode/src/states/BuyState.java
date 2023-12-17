@@ -23,6 +23,7 @@ public class BuyState extends State {
     private Button acceptButton;
     private int index;
     private boolean cantBuy = false;
+    private int[] precio = new int[] {0,100,150,150,200,150,150,300,250,150,200,350};
 
     public BuyState(int index) {
         this.index = index;
@@ -110,9 +111,8 @@ public class BuyState extends State {
         acceptButton.draw(g);
         cancelButton.draw(g);
         MenuState.drawMoney(g);
-        if(Assets.player[index] == Assets.player[1]){ //RoboRana
-            g.drawImage(Assets.coinSpr, Constants.WIDTH /2 - 60, Constants.HEIGHT/2 + 100, null);
-            Text.drawText(g, "100", new Point(Constants.WIDTH / 2 - 10, Constants.HEIGHT / 2 + 125), true, Color.WHITE, Assets.normalFontBig);
-        }
+
+        g.drawImage(Assets.coinSpr, Constants.WIDTH /2 - 60, Constants.HEIGHT/2 + 100, null);
+        Text.drawText(g, String.valueOf(precio[index]), new Point(Constants.WIDTH / 2 - 10, Constants.HEIGHT / 2 + 125), true, Color.WHITE, Assets.normalFontBig);
     }
 }

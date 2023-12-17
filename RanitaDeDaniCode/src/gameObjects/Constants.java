@@ -104,24 +104,19 @@ public class Constants {
             "    \"index\": 8\n" +
             "  },\n" +
             "  {\n" +
-            "    \"name\": \"pou\",\n" +
+            "    \"name\": \"jojofied\",\n" +
             "    \"comprada\": false,\n" +
             "    \"index\": 9\n" +
             "  },\n" +
             "  {\n" +
-            "    \"name\": \"jojofied\",\n" +
+            "    \"name\": \"alex_frog\",\n" +
             "    \"comprada\": false,\n" +
             "    \"index\": 10\n" +
             "  },\n" +
             "  {\n" +
-            "    \"name\": \"alex_frog\",\n" +
-            "    \"comprada\": false,\n" +
-            "    \"index\": 11\n" +
-            "  },\n" +
-            "  {\n" +
             "    \"name\": \"cat_frog\",\n" +
             "    \"comprada\": false,\n" +
-            "    \"index\": 12\n" +
+            "    \"index\": 11\n" +
             "  }\n" +
             "]";
 }
