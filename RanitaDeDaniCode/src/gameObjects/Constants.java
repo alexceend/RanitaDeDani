@@ -47,9 +47,9 @@ public class Constants {
 
     public static final String GENERAL_PATH = FileSystemView.getFileSystemView().getDefaultDirectory().getPath();
 
-    public static final String SCORE_PATH = GENERAL_PATH + "\\DanisFrog\\data.json";
-    public static final String SKIN_PATH = GENERAL_PATH + "\\DanisFrog\\skinData.json";
-    public static final String MONEY_PATH = GENERAL_PATH + "\\DanisFrog\\moneyData.json";
+    public static final String SCORE_PATH = GENERAL_PATH + "\\DannysFrog\\data.json";
+    public static final String SKIN_PATH = GENERAL_PATH + "\\DannysFrog\\skinData.json";
+    public static final String MONEY_PATH = GENERAL_PATH + "\\DannysFrog\\moneyData.json";
 
 
     public static final String JSONMONEYINIT = "[\n" +

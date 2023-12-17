@@ -30,7 +30,7 @@ public class Window extends JFrame implements Runnable {
     private MouseGUI mouseGUI = new MouseGUI();
 
     public Window() {
-        super.setTitle("Ranita Loca");
+        super.setTitle("Danny's Frog");
         super.setSize(WIDTH, HEIGHT);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setResizable(false);
@@ -50,7 +50,7 @@ public class Window extends JFrame implements Runnable {
         super.add(canvas);
 
         //Cargar dinero
-        Player.loadMoney();
+        //Player.loadMoney();
     }
 
     public static void main(String[] args) {

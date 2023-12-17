@@ -1,6 +1,7 @@
 package graphics;
 
 import javax.sound.sampled.Clip;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

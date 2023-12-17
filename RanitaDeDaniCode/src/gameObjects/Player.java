@@ -37,6 +37,7 @@ public class Player extends MovingObject {
 
     public Player(Point center, BufferedImage texture, GameState gameState) {
         super(center, new Vector2D(0, 1), texture, gameState);
+
         for(int i = 0; i < skins.length; i++){
             if(skins[i]){
                 skinIndex = i;
@@ -149,10 +150,11 @@ public class Player extends MovingObject {
     public static void loadMoney(){
         try {
             File f = new File(Constants.MONEY_PATH);
-            if(!(f.exists())){
+            if(!f.exists()){
+                f.getParentFile().mkdirs();
                 f.createNewFile();
                 FileWriter fw = new FileWriter(f);
-                PrintWriter out = new PrintWriter(f);
+                PrintWriter out = new PrintWriter(fw);
                 out.println(Constants.JSONMONEYINIT);
                 out.close();
             }

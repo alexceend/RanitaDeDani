@@ -51,7 +51,8 @@ public class GameState extends State{
         int numRand = (int) (Math.random() * flys);
         for (int numWasps = 0; numWasps < numRand; numWasps++) {
             double x = 400, y = 400;
-            int lado = new Random().nextInt(0, 3);
+            int lado = (int) (Math.random() * 4);
+            //int lado = new Random().nextInt(0, 3);
             switch (lado) {
                 case 0: //Por arriba
                     x = Math.random() * 800;
@@ -81,7 +82,8 @@ public class GameState extends State{
 
         for (int i = 0; i < flys; i++) {
             double x = 400, y = 400;
-            int lado = new Random().nextInt(0, 3);
+            int lado = (int) (Math.random() * 4);
+            //int lado = new Random().nextInt(0, 3);
             switch (lado) {
                 case 0: //Por arriba
                     x = Math.random() * 800;

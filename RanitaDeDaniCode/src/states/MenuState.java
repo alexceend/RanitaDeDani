@@ -15,6 +15,9 @@ public class MenuState extends State{
 
     ArrayList<Button> buttons = new ArrayList<Button>();
     public MenuState(){
+
+        Player.loadMoney();
+
         //GameState
         buttons.add(new Button(
                 Assets.greyButtonRec,
